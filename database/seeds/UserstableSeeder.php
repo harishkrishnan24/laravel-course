@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class UserstableSeeder extends Seeder
+class UsersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,9 @@ class UserstableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $usersCount = max((int) $this->command->ask('How many users would you like?', 20), 1);
+
+        factory(App\User::class)->states('john-doe')->create();
+        factory(App\User::class, $usersCount)->create();
     }
 }
