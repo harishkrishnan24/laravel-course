@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Cache;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,6 +16,9 @@ class DatabaseSeeder extends Seeder
             $this->command->call('migrate:refresh');
             $this->command->info('Database was refreshed');
         }
+
+        Cache::tags(['blog-post'])->flush();
+
         $this->call([UsersTableSeeder::class, BlogPostsTableSeeder::class, CommentsTableSeeder::class]);
     }
 }

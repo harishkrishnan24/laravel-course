@@ -13,6 +13,7 @@
     @updated(['date' => $post->updated_at])
     Updated
     @endupdated
+    <p>Currently read by {{ $counter }} people</p>
 
     <h4>Comments</h4>
     @forelse ($post->comments as $comment)
