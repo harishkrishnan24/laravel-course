@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\BlogPost;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePost;
+use App\User;
 use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
@@ -21,7 +22,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('posts.index', ['posts' => BlogPost::withCount('comments')->get()]);
+        return view('posts.index', [
+            'posts' => BlogPost::latest()->withCount('comments')->get(),
+            'mostCommented' => BlogPost::mostCommented()->take(5)->get(),
+            'mostActive' => User::withMostBlogPost()->take(5)->get(),
+            'mostActiveLastMonth' => User::withMostBlogPostsLastMonth()->take(5)->get()
+        ]);
     }
 
     /**
@@ -33,6 +39,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
+        // return view('posts.show', ['post' => BlogPost::with(['comments' => function ($query) {
+        //     return $query->latest();
+        // }])->findOrFail($id)]);
         return view('posts.show', ['post' => BlogPost::with('comments')->findOrFail($id)]);
     }
 
@@ -45,6 +54,7 @@ class PostController extends Controller
     public function store(StorePost $request)
     {
         $validatedData = $request->validated();
+        $validatedData['user_id'] = $request->user()->id;
         $blogPost = BlogPost::create($validatedData);
         $request->session()->flash('status', 'Blog post was created!');
 
