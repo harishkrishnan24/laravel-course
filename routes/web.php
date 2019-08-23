@@ -15,5 +15,6 @@ Route::get('/', 'HomeController@home')->name('home');
 Route::get('/contact', 'HomeController@contact')->name('contact');
 Route::get('/secret', 'HomeController@secret')->name('secret')->middleware('can:home.secret');
 Route::resource('/posts', 'PostController');
+Route::get('/posts/tag/{tag}', 'PostTagController@index')->name('posts.tags.index');
 
 Auth::routes();
