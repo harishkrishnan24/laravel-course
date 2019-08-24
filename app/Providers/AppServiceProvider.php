@@ -23,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('components.card', 'card');
         Blade::component('components.tags', 'tags');
         Blade::component('components.errors', 'errors');
+        Blade::component('components.comment-form', 'commentForm');
+        Blade::component('components.comment-list', 'commentList');
 
         view()->composer(['posts.index', 'posts.show'], ActivityComposer::class);
     }
