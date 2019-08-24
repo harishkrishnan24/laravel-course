@@ -48,7 +48,7 @@ class BlogPost extends Model
 
     public function image()
     {
-        return $this->hasOne('App\Image');
+        return $this->morphOne('App\Image', 'imageable');
     }
 
     public static function boot()
