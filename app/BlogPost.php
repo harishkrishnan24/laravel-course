@@ -46,6 +46,11 @@ class BlogPost extends Model
         return $this->belongsToMany('App\Tag')->withTimestamps();
     }
 
+    public function image()
+    {
+        return $this->hasOne('App\Image');
+    }
+
     public static function boot()
     {
         static::addGlobalScope(new DeletedAdminScope);
