@@ -4,6 +4,7 @@ namespace App;
 
 use App\BlogPost;
 use App\Scopes\LatestScope;
+use App\Traits\Taggable;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Taggable;
     protected $fillable = ['user_id', 'content'];
 
     public function commentable()

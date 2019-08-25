@@ -4,6 +4,7 @@ namespace App;
 
 use App\Scopes\DeletedAdminScope;
 use App\Scopes\LatestScope;
+use App\Traits\Taggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Cache;
 class BlogPost extends Model
 {
     // protected $table = 'blogposts';
-    use SoftDeletes;
+    use SoftDeletes, Taggable;
 
     protected $fillable = ['title', 'content', 'user_id'];
 
@@ -39,11 +40,6 @@ class BlogPost extends Model
     public function scopeLatestWithRelations(Builder $query)
     {
         return $query->latest()->withCount('comments')->with('user')->with('tags');
-    }
-
-    public function tags()
-    {
-        return $this->belongsToMany('App\Tag')->withTimestamps();
     }
 
     public function image()
