@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\BlogPostPosted;
+use App\Events\CommentPosted;
+use App\Listeners\NotifyAdminWhenBlogPostCreated;
+use App\Listeners\NotifyUsersAboutComment;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -18,6 +22,12 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        CommentPosted::class => [
+            NotifyUsersAboutComment::class
+        ],
+        BlogPostPosted::class => [
+            NotifyAdminWhenBlogPostCreated::class
+        ]
     ];
 
     /**
